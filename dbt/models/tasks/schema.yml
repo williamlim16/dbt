@@ -1,0 +1,31 @@
+
+version: 2
+
+models:
+  - name: stations
+    description: "List of valid stations"
+    columns:
+      - name: station_id
+        description: "The primary key for station"
+        data_tests:
+          - unique
+          - not_null
+
+  - name: member_type
+    description: "List of valid member type"
+    columns:
+      - name: member_id
+        description: "Member type id"
+        data_tests:
+          - unique
+          - not_null
+
+  - name: rideable_type
+    description: "List of valid rideables"
+    columns:
+      - name: rideable_type_id
+        description: "Rideable type id"
+        data_tests:
+          - unique
+          - not_null
+
