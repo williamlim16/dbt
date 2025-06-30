@@ -3,7 +3,7 @@
 
 
 SELECT day_of_week,
-       start_station_id,
+      dim_stations.station_name AS station_name, 
 	   number_of_starts
 FROM (
                 select   to_char(started_at, 'Day') AS day_of_week, EXTRACT(DOW FROM started_at) AS dow_number,
@@ -13,5 +13,7 @@ FROM (
                 FROM     {{ ref('fct_bike_log')}}
                 GROUP BY to_char(started_at, 'Day'), dow_number,
                          start_station_id) as ranked_stations
-WHERE rn = 1
+JOIN {{ ref('dim_stations') }} dim_stations
+ON ranked_stations.start_station_id = dim_stations.station_id
+WHERE rn <= 10
 ORDER BY dow_number
