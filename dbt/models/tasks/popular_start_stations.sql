@@ -10,7 +10,7 @@ FROM (
                          start_station_id,
                          count(*)                                                                           AS number_of_starts,
                          row_number() OVER (partition BY to_char(started_at, 'Day') ORDER BY count(*) DESC) AS rn
-                FROM     {{ ref('bike_log')}}
+                FROM     {{ ref('fct_bike_log')}}
                 GROUP BY to_char(started_at, 'Day'), dow_number,
                          start_station_id) as ranked_stations
 WHERE rn = 1
