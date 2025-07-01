@@ -2,7 +2,7 @@
 version: 2
 
 models:
-  - name: stations
+  - name: dim_stations
     description: "List of valid stations"
     columns:
       - name: station_id
@@ -11,16 +11,7 @@ models:
           - unique
           - not_null
 
-  - name: member_type
-    description: "List of valid member type"
-    columns:
-      - name: member_id
-        description: "Member type id"
-        data_tests:
-          - unique
-          - not_null
-
-  - name: rideable_type
+  - name: dim_rideable_type
     description: "List of valid rideables"
     columns:
       - name: rideable_type_id
@@ -28,4 +19,44 @@ models:
         data_tests:
           - unique
           - not_null
+
+  - name: dim_member_type
+    description: "List of valid member type"
+    columns:
+      - name: member_id
+        description: "Member id"
+        data_tests:
+          - unique
+          - not_null
+
+  - name: fct_bike_log
+    description: "List of bike logs"
+    columns:
+      - name: start_station_id
+        description: "Start station id"
+        data_tests:
+          - relationships:
+              to: ref('dim_stations')
+              field: station_id
+
+      - name: end_station_id
+        description: "End station id"
+        data_tests:
+          - relationships:
+              to: ref('dim_stations')
+              field: station_id
+
+      - name: rideable_type_id
+        description: "Rideable type id"
+        data_tests:
+          - relationships:
+              to: ref('dim_rideable_type')
+              field: rideable_type_id
+
+      - name: member_id
+        description: "Member id"
+        data_tests:
+          - relationships:
+              to: ref('dim_member_type')
+              field: member_id
 
